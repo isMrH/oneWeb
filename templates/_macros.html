@@ -1,0 +1,31 @@
+{#建立宏文件macro，其实和设置函数是一样的，这里的pagination_widget是函数名，后面括号内的是传入的参数 #}
+{% macro pagination_widget(pagination, endpoint, link) %}
+    <ul class="pagination">
+{#    注释见，http://blog.csdn.net/bestallen/article/details/52485595#}
+        <li{% if not pagination.has_prev %} class="disabled"{% endif %}>
+            <a href="{% if pagination.has_prev %}{{ url_for(endpoint,link=link,page = pagination.page - 1, **kwargs) }}
+            {% else %}#{% endif %}">&laquo;
+            </a>
+        </li>
+        {% for p in pagination.iter_pages(5) %}
+            {% if p %}
+                {% if p == pagination.page %}
+                    <li class="active">
+                        <a href="{{ url_for(endpoint,link=link, page = p, **kwargs) }}">{{ p }}</a>
+                    </li>
+                {% else %}
+                <li>
+                    <a href="{{ url_for(endpoint,link=link,page = p, **kwargs) }}">{{ p }}</a>
+                </li>
+                {% endif %}
+            {% else %}
+            <li class="disabled">
+                <a href="#">&hellip;</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        <li{% if not pagination.has_next %} class="disabled"{% endif %}>
+            <a href="{% if pagination.has_next %}{{ url_for(endpoint,link=link,page = pagination.page + 1, **kwargs) }}{% else %}#{% endif %}">&raquo;</a>
+        </li>
+    </ul>
+{% endmacro %}

@@ -1,0 +1,40 @@
+body{
+    background-image: url("/static/images/bg-0006.gif");
+    background-repeat: repeat;
+}
+
+.info_user{
+    width: 130px;
+    margin: 0px;
+    font-weight: bold;
+}
+.info_time{
+    width: 80px;
+    margin-left: 30px;
+}
+.info_content{
+    width: 700px;
+    margin: 0 auto ;
+}
+.info_num{
+    float: left;
+}
+.info{
+    width: 750px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.entry {
+    font-size: 14px;
+    line-height: 26px;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin: 0 auto;
+    width:780px;
+}
+.entry img{
+    width:760px;
+    height: auto;
+    margin: 0 auto;
+}

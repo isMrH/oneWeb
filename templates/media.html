@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block main %}
+    <ol class="breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li class="active" >{{ link }}</li>
+    </ol>
+    <div class="list-group">
+        {% for con in content  %}
+        <a  href="#" class="list-group-item " onclick="getaId('{{ con.aId }}'),ajaxShowContent()" data-toggle="modal" data-target="#myModal">
+        <h4 class="list-group-item-heading"> {{ con.title }}</h4>
+            <span class="label label-info">{{ con.time }}</span>
+            <span class="label label-warning">{{ con.mName }}</span>
+        <p class="list-group-item-text" style="margin-top: 5px">{{ re.sub('</?\w+[^>]*>','',con.content)[0:150]+'...' }}</p>
+        </a>
+        {% endfor %}
+    </div>
+    {% import "_macros.html" as macros %}
+    {%if pagination%}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination,methname, link) }}
+        </div>
+    {% endif %}
+
+{% endblock %}
