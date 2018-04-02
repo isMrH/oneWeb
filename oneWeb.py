@@ -5,11 +5,23 @@ import config, re, random
 from zd import content_main
 from laod import laod_news
 from sqlalchemy import or_, func
+from flask_caching import Cache
+
 app = Flask(__name__)
 app.config.from_object(config)
 app.secret_key = 'super secret key'
 db.init_app(app)
+# 缓存配置
+cache = Cache(app,config = {
+    'CACHE_TYPE': 'redis',
+    'CACHE_REDIS_HOST': '127.0.0.1',
+    'CACHE_REDIS_PORT': 6379,
+    'CACHE_REDIS_DB': 1,
+    'CACHE_REDIS_PASSWORD':''
+})
+cache.init_app(app)
 
+@cache.memoize(60)
 @app.context_processor
 def load_nav():
     # 一级菜单参数
@@ -67,9 +79,9 @@ def hello_world():
 @app.route('/randomart/')
 def RandomArt():
     count = db.session.query(func.count(Article.aId)).scalar()
-    mit = random.randint(1, count-10)
+    mit = random.randint(1, count-15)
     randomart = db.session.query(Article.aId, Article.title, Article.time) \
-        .order_by(-Article.time).limit(10).offset(mit).all()
+        .order_by(-Article.time).limit(15).offset(mit).all()
     return jsonify({'randomart': randomart, 'verify': 'success'})
 
 @app.route('/showcontent/')
